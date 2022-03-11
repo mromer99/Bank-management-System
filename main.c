@@ -18,7 +18,7 @@ void fordelay(int j)
 }
 
 struct date{
-    int month, day, year;
+    int month, day, year;       
 
 };
 
@@ -29,7 +29,7 @@ struct {
     char citizenship[15];
     double phone;
     char acc_type[10];
-    float amt;
+    float amount;
     struct date dob;
     struct date deposit;
     struct date withdraw;
@@ -56,7 +56,7 @@ void new_acc()
     
     while (fscanf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, &add.dob.day, 
     &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, 
-    &add.amt, &add.deposit.day, &add.deposit.month, &add.deposit.year) != EOF)
+    &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) != EOF)
     {
         if (check.acc_nr == add.acc_nr)
         {
@@ -66,11 +66,11 @@ void new_acc()
         }
     }
     add.acc_nr = check.acc_nr;
-        printf("\nEnter the name:");
+    printf("\nEnter the name:");
     scanf("%s", add.name);
 
-    printf("\nEnter the date of birth(dd/mm/yyyy):");
-    scanf("%d/%d/%d", &add.dob.month, &add.dob.day, &add.dob.year);
+    printf("\nEnter the date of birth(mm/dd/yyyy):");
+    scanf("%d/%d/%d", &add.dob.day, &add.dob.month, &add.dob.year);
 
     printf("\nEnter the age:");
     scanf("%d", &add.age);
@@ -85,12 +85,12 @@ void new_acc()
     scanf("%lf", &add.phone);
 
     printf("\nEnter the amount to the deposit:$");
-    scanf("%f", &add.amt);
+    scanf("%f", &add.amount);
 
     printf("\nType of account:\n\t#Saving\n\t#Current\n\t#Fixed1(for 1 year)\n\t#Fixed2(for 2 years)\n\t#Fixed3(for 3 years)\n\n\tEnter your choice:");
     scanf("%s", add.acc_type);
 
-    fprintf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposit.month, add.deposit.day, add.deposit.year);
+    fprintf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amount, add.deposit.month, add.deposit.day, add.deposit.year);
 
     fclose(ptr);
     printf("\nAccount created successfully!");
@@ -126,7 +126,7 @@ void edit(void)
     scanf("%d", &upd.acc_nr);
     while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, &add.dob.day, 
     &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, 
-    &add.amt, &add.deposit.day, &add.deposit.month, &add.deposit.year) != EOF)
+    &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) != EOF)
     {
         if (add.acc_nr == upd.acc_nr)
         {
@@ -139,7 +139,7 @@ void edit(void)
             {
                 printf("Enter the new address: ");
                 scanf("%s", upd.address);
-                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, upd.address, add.citizenship, add.phone, add.acc_type, add.amt, add.deposit.day, add.deposit.month, add.deposit.year);
+                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, upd.address, add.citizenship, add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
                 system("clear");
                 printf("changes saved!");
             }
@@ -147,7 +147,7 @@ void edit(void)
             {
                 printf("Enter the new phone number");
                 scanf("%lf", &upd.phone);
-                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, upd.phone, add.acc_type, add.amt, add.deposit.day, add.deposit.month, add.deposit.year);
+                fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, upd.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
                 system("clear");
                 printf("changes saved!");
             }
@@ -156,7 +156,7 @@ void edit(void)
         {
             fprintf(newrec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, add.dob.day, 
             add.dob.month, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, 
-            add.amt, add.deposit.day, add.deposit.month, add.deposit.year);
+            add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
         }
     }
 
@@ -213,7 +213,91 @@ void edit(void)
 
 void transact(void)
 {
+    int choice, test = 0;
+    FILE *old, *newRec;
+    old = fopen("record.dat", "r");
+    newRec= fopen("new.dat", "w");
 
+    printf("Enter the account nr of the Customer: ");
+    scanf("%d", &transaction.acc_nr);
+    while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_nr, add.name, 
+    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year))
+    {
+        if (add.acc_nr == transaction.acc_nr) 
+        {
+            test = 1;
+            if (strcmp(add.acc_type, "fixed1") == 0 || strcmp(add.acc_type, "fixed")== 0 || strcmp(add.acc_type, "fixed3")== 0)
+            {
+                printf("\a\a\a\n\n YOU CANNOT DEPOSIT OR WITHDRAW CASH IN FIXED ACCOUNTS!!!!!");
+                fordelay(1000000000);
+                system("clear");
+                menu();
+            }
+            printf("\n\nDo you want to \n1.Deposit\n2.Withdraw?\n\nEnter your Choice(1 for deposit and 2 for withdraw):");
+            scanf("%d", &choice);
+            if (choice == 1)
+            {
+                printf("Enter the amount you want to deposit:$ ");
+                scanf("%f", &transaction.amount);
+                add.amount += transaction.amount;
+                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
+    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
+                printf("\n\nDeposited successfully");
+            }
+            else
+            {
+                printf("Enter the amount you want to withdraw:$ ");
+                scanf("%f", &transaction.amount);
+                add.amount -= transaction.amount;
+                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
+    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
+                printf("\n\Withdrawn successfully");
+            }
+        }
+        else
+        {
+            fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
+    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
+        }
+
+    }
+    
+    fclose(old);
+    fclose(newRec);
+    remove("record.dat");
+    rename("new.dat", "record.dat");
+    if (test != 1)
+    {
+        printf("\n\nRecord not found!!");
+
+        transaction_invalid:
+        printf("\n\n\nEnter '0' to try again, '1' to return to main Menu and '2' to exit ");
+        scanf("%d", &main_exit);
+        system("clear");
+
+        if (main_exit == 0)
+        {
+            transact();
+        } 
+        else if (main_exit == 1)
+        {
+            menu();    
+        }
+        else if (main_exit == 2)
+        {
+            close_and_exit();
+        }
+        else {
+            printf("\nInvalid!");
+            goto transaction_invalid;
+        }
+        
+    }
+    
 }
 
 void see(void)
