@@ -21,3 +21,9 @@ node_modules/
 *.log
 *.sql
 *.sqlite
+
+# ignore Personal Data Files
+*.dat
+
+# ignore Main
+
