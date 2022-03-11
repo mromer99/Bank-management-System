@@ -3,7 +3,6 @@
 #include<string.h>
 
 int main_exit;
-
 void menu();
 void close_and_exit();
 
@@ -69,7 +68,7 @@ void new_acc()
     printf("\nEnter the name:");
     scanf("%s", add.name);
 
-    printf("\nEnter the date of birth(mm/dd/yyyy):");
+    printf("\nEnter the date of birth(dd/mm/yyyy):");
     scanf("%d/%d/%d", &add.dob.day, &add.dob.month, &add.dob.year);
 
     printf("\nEnter the age:");
@@ -222,7 +221,7 @@ void transact(void)
     scanf("%d", &transaction.acc_nr);
     while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_nr, add.name, 
     &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
-    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year))
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
     {
         if (add.acc_nr == transaction.acc_nr) 
         {
@@ -241,9 +240,9 @@ void transact(void)
                 printf("Enter the amount you want to deposit:$ ");
                 scanf("%f", &transaction.amount);
                 add.amount += transaction.amount;
-                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
-    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
-    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
+                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, 
+    add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, 
+    add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
                 printf("\n\nDeposited successfully");
             }
             else
@@ -251,17 +250,23 @@ void transact(void)
                 printf("Enter the amount you want to withdraw:$ ");
                 scanf("%f", &transaction.amount);
                 add.amount -= transaction.amount;
-                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
-    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
-    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
-                printf("\n\Withdrawn successfully");
+                fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, 
+    add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, 
+    add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
+                printf("\n\nWithdrawn successfully");
             }
         }
+      /*  else if (add.acc_nr != transaction.acc_nr)
+        {
+            printf("\n\nAccount was not Found!");
+
+        }
+        */
         else
         {
-            fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, 
-    &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, 
-    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year);
+            fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, 
+    add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, 
+    add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
         }
 
     }
@@ -295,6 +300,18 @@ void transact(void)
             printf("\nInvalid!");
             goto transaction_invalid;
         }
+    }
+    else 
+    {
+        printf("\nEnter '0' to exit and '1' to go to the main Menu: ");
+        scanf("%d", &main_exit);
+        system("clear");
+
+        if (main_exit == 1)
+        {
+            menu();
+        } else
+            close_and_exit();
         
     }
     
