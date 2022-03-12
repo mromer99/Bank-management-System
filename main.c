@@ -16,6 +16,12 @@ void fordelay(int j)
     
 }
 
+float interest(float timee, float amount, int rate) {
+    double SI;
+    SI = (timee*amount*rate) / 100.0;
+    return(SI);
+}
+
 struct date{
     int month, day, year;       
 
@@ -123,7 +129,7 @@ void edit(void)
 
     printf("\nEnter the account nr. of the customer whose info you want to change: ");
     scanf("%d", &upd.acc_nr);
-    while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", &add.acc_nr, add.name, &add.dob.day, 
+    while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", &add.acc_nr, add.name, &add.dob.day, 
     &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship, &add.phone, add.acc_type, 
     &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) != EOF)
     {
@@ -330,8 +336,147 @@ void see(void)
     {
         printf("Enter the account number:");
         scanf("%d", &check.acc_nr);
+
+        while (fscanf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", 
+        &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
+        &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
+        {
+            if (add.acc_nr == check.acc_nr)
+            {
+                system("clear");
+                test = 1;
+
+                printf("\nAccount Nr.:%d \nName:%s \nDate Of Birth: %d/%d/%d \nAge: %d \nAdress: %s \nCitizenship Nr.: %s \nPhone Nr.: %.0lf \nType of Account: %s \nAmount Deposited: $%.2f \nDate Of Deposit: %d/%d/%d", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
+                if (strcmp(add.acc_type, "Fixed1")== 0)
+                {
+                    time = 1.0;
+                    rate = 9;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+1);
+                }
+                else if (strcmp(add.acc_type, "fixed2")== 0)
+                {
+                    time = 2.0;
+                    rate = 11;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+2);
+                }
+                else if (strcmp(add.acc_type, "fixed3")== 0)
+                {
+                    time = 3.0;
+                    rate = 13;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+3);
+                }
+                else if (strcmp(add.acc_type, "saving")== 0)
+                {
+                    time = 1.0/12.0;
+                    rate = 8;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d of every month", intrst, add.deposit.day);
+                }
+                else if (strcmp(add.acc_type, "current")== 0)
+                {
+                    printf("\n\nYou will get no interest \a\a");
+                }
+            }          
+        }
     }
-    
+    else if (choice == 2)
+    {
+        printf("Enter the Name:");
+        scanf("%s", check.name);
+
+        while (fscanf(ptr, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", 
+        &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
+        &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
+        {
+            if (add.name == check.name)
+            {
+                system("clear");
+                test = 1;
+
+                printf("\nAccount Nr.:%d \nName:%s \nDate Of Birth: %d/%d/%d \nAge: %d \nAdress: %s \nCitizenship Nr.: %s \nPhone Nr.: %.0lf \nType of Account: %s \nAmount Deposited: $%.2f \nDate Of Deposit: %d/%d/%d", add.acc_nr, add.name, add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
+                if (strcmp(add.acc_type, "Fixed1")== 0)
+                {
+                    time = 1.0;
+                    rate = 9;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+1);
+                }
+                else if (strcmp(add.acc_type, "fixed2")== 0)
+                {
+                    time = 2.0;
+                    rate = 11;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+2);
+                }
+                else if (strcmp(add.acc_type, "fixed3")== 0)
+                {
+                    time = 3.0;
+                    rate = 13;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d/%d/%d.", intrst, add.deposit.day, add.deposit.month, add.deposit.year+3);
+                }
+                else if (strcmp(add.acc_type, "saving")== 0)
+                {
+                    time = 1.0/12.0;
+                    rate = 8;
+                    intrst = interest(time, add.amount, rate);
+                    printf("\n\nYou will get $%.2f as interest on %d of every month", intrst, add.deposit.day);
+                }
+                else if (strcmp(add.acc_type, "current")== 0)
+                {
+                    printf("\n\nYou will get no interest \a\a");
+                }
+            }          
+        }
+    }
+
+    fclose(ptr);
+    if (test !=1)
+    {
+        system("clear");
+        printf("\nRecord not found!!\a\a\a");
+        
+        see_invalid:
+            printf("\nEnter 0 to try again, 1 to return to main menu and 2 to exit: ");
+            scanf("%d", &main_exit);
+            system("clear");
+                if (main_exit == 0)
+                {
+                    see();
+                }
+                else if (main_exit == 1)
+                {
+                    menu();
+                }
+                else if (main_exit == 2)
+                {
+                    close_and_exit();
+                }
+                else
+                {
+                    system("clear");
+                    printf("\nInvalid!!\a");
+                    goto see_invalid;
+                }
+    }
+    else {
+        printf("\nEnter 0 to go to exit and 1 to return to main menu: ");
+        scanf("%d", &main_exit);
+        if (main_exit == 0)
+        {
+            system("clear");
+            close_and_exit();
+        }
+        else if (main_exit == 1)
+        {
+            system("clear");
+            menu();
+        }
+        
+    }
 
 }
 
