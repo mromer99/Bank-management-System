@@ -319,6 +319,19 @@ void transact(void)
 
 void see(void)
 {
+    FILE *ptr;
+    int test = 0, rate, choice;
+    float time, intrst;
+
+    ptr = fopen("record.dat", "r");
+    printf("Do you want to check by\n1.Account no\n2.Name\nEnter your choice: ");
+    scanf("%d", &choice);
+    if (choice == 1)
+    {
+        printf("Enter the account number:");
+        scanf("%d", &check.acc_nr);
+    }
+    
 
 }
 
