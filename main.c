@@ -492,20 +492,74 @@ void see(void)
 
 void erase(void)
 {
-    FILE *old, *newrec;
+    FILE *old, *newRec;
     int test = 0;
     old = fopen("record.dat", "r");
-    newrec = fopen("new.dat", "w");
+    newRec = fopen("new.dat", "w");
     printf("Enter the account Nr. of the customer you want to delete: ");
-    scanf("%d", remv.acc_nr);
+    scanf("%d", &remv.acc_nr);
 
     while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", 
     &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
     &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
     {
         
+        if (add.acc_nr != remv.acc_nr)
+        {
+            fprintf(newRec, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d\n", add.acc_nr, add.name, 
+            add.dob.day, add.dob.month, add.dob.year, add.age, add.address, add.citizenship, 
+            add.phone, add.acc_type, add.amount, add.deposit.day, add.deposit.month, add.deposit.year);
+        }
+        else {
+            test++;
+            printf("\nRecord deleted successfully!\n");
+        }
     }
+    fclose(old);
+    fclose(newRec);
+    remove("record.dat");
+    rename("new.dat", "record,dat");
 
+    if (test == 0)
+    {
+        printf("\nRecord not found!!\a\a\a");
+
+        delete_invalid:
+            printf("\nEnter 0 to try again, 1 to return to main menu and 2 to exit: ");
+            scanf("%d", &main_exit);
+
+            if (main_exit == 0)
+            {
+                erase();
+            }
+            else if (main_exit == 1)
+            {
+                menu();
+            }
+            else if (main_exit == 2)
+            {
+                close_and_exit();
+            }
+            else
+            {
+                printf("\nInvalid!\a");
+                goto delete_invalid;
+            }
+    }
+    else {
+        printf("\nEnter 0 to exit and 1 to go to the main menu: ");
+        scanf("%d", &main_exit);
+        system("clear");
+
+        if (main_exit == 0)
+        {
+            close_and_exit();
+        }
+        else if (main_exit == 1)
+        {
+            menu();
+        }
+    }
 }
 
 void view_list(void)
