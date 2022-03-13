@@ -119,7 +119,7 @@ void new_acc()
 }
 
 
-void edit(void) 
+void edit() 
 {
     int choice, test = 0;
 
@@ -562,9 +562,47 @@ void erase(void)
     }
 }
 
-void view_list(void)
+void view_list()
 {
+    FILE *view;
+    view = fopen("record.dat", "r");
 
+    int test = 0;
+    system("clear");
+    printf("\nAccount Nr.\tName\t\t\tAddress\t\t\tPhone\n");
+
+    while(fscanf(view, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", 
+        &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
+        &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
+    {
+        printf("\n%6d\t %10s\t\t\t%10s\t\t\t%.0lf", add.acc_nr, add.name, add.address, add.phone);
+        test++;
+
+    }
+
+    fclose(view);
+    if (test == 0)
+    {
+        system("clear");
+        printf("\nNo Records Found!\a\n");
+    }
+    view_list_invalid:
+        printf("\n\nEnter 0 to exit and enter 1 to go to the main menu: ");
+        scanf("%d", &main_exit);
+        system("clear");
+        if (main_exit == 0)
+        {
+            close_and_exit();
+        }
+        else if (main_exit == 1)
+        {
+            menu();
+        }
+        else {
+            printf("\nInvalid!\a");
+            goto view_list_invalid;
+        }
+    
 }
 
 void close_and_exit() {
@@ -601,7 +639,6 @@ void menu(void)
     case 7:close_and_exit();
     break;
     }
-
 }
 
 
