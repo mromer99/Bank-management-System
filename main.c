@@ -35,11 +35,11 @@ struct {
     double phone;
     char acc_type[10];
     float amount;
-    struct date dob;
+    struct date dob;     //date of Birth
     struct date deposit;
     struct date withdraw;
     
-} add, upd, check, rem, transaction;
+} add, upd, check, remv, transaction;
 
 
 
@@ -167,8 +167,9 @@ void edit(void)
 
     fclose(old);
     fclose(newrec);
-    remove("record.dat");
     rename("new.dat", "record.dat");
+    remove("record.dat");
+
 
     if (test != 1)
     {
@@ -279,8 +280,9 @@ void transact(void)
     
     fclose(old);
     fclose(newRec);
-    remove("record.dat");
     rename("new.dat", "record.dat");
+    remove("record.dat");
+
     if (test != 1)
     {
         printf("\n\nRecord not found!!");
@@ -318,6 +320,7 @@ void transact(void)
             menu();
         } else
             close_and_exit();
+        
         
     }
     
@@ -375,12 +378,18 @@ void see(void)
                     intrst = interest(time, add.amount, rate);
                     printf("\n\nYou will get $%.2f as interest on %d of every month", intrst, add.deposit.day);
                 }
-                else if (strcmp(add.acc_type, "current")== 0)
+                else if (strcmp(add.acc_type, "Current")== 0)
                 {
-                    printf("\n\nYou will get no interest \a\a");
+                    printf("\n\nYou will get no interest.\a\a\n");
                 }
             }          
-        }
+            else if (add.acc_nr != check.acc_nr)
+            {
+                system("clear");
+                printf("\nRecord NOt found!\a");
+            }
+            
+        }   
     }
     else if (choice == 2)
     {
@@ -391,7 +400,7 @@ void see(void)
         &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
         &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
         {
-            if (add.name == check.name)
+            if (strcmp(add.name, check.name) == 0)
             {
                 system("clear");
                 test = 1;
@@ -423,11 +432,12 @@ void see(void)
                     time = 1.0/12.0;
                     rate = 8;
                     intrst = interest(time, add.amount, rate);
-                    printf("\n\nYou will get $%.2f as interest on %d of every month", intrst, add.deposit.day);
+                    printf("\n\nYou will get $%.2f as interest on %d of every month.", intrst, add.deposit.day);
+                    
                 }
-                else if (strcmp(add.acc_type, "current")== 0)
+                else if (strcmp(add.acc_type, "Current")== 0 || strcmp(add.acc_type, "current")== 0)
                 {
-                    printf("\n\nYou will get no interest \a\a");
+                    printf("\n\nYou will get no interest.\a\a\n");
                 }
             }          
         }
@@ -462,7 +472,7 @@ void see(void)
                     goto see_invalid;
                 }
     }
-    else {
+ /*   else {
         printf("\nEnter 0 to go to exit and 1 to return to main menu: ");
         scanf("%d", &main_exit);
         if (main_exit == 0)
@@ -476,12 +486,25 @@ void see(void)
             menu();
         }
         
-    }
+    } */
 
 }
 
 void erase(void)
 {
+    FILE *old, *newrec;
+    int test = 0;
+    old = fopen("record.dat", "r");
+    newrec = fopen("new.dat", "w");
+    printf("Enter the account Nr. of the customer you want to delete: ");
+    scanf("%d", remv.acc_nr);
+
+    while (fscanf(old, "%d %s %d/%d/%d %d %s %s %lf %s %f %d/%d/%d", 
+    &add.acc_nr, add.name, &add.dob.day, &add.dob.month, &add.dob.year, &add.age, add.address, add.citizenship,
+    &add.phone, add.acc_type, &add.amount, &add.deposit.day, &add.deposit.month, &add.deposit.year) !=EOF)
+    {
+        
+    }
 
 }
 
